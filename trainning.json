@@ -1,0 +1,24 @@
+[
+  {
+    "id": "6800e7b0-c1b7-4dc9-84a8-9fde957fc3a8",
+    "data": [
+      {
+        "column_name": "age",
+        "business_name": [
+          "Age of Employee",
+          "Years"
+        ],
+        "data_type": "discrete"
+      },
+      {
+        "column_name": "Emp_Name",
+        "business_name": [
+          "Name",
+          "Employee Name"
+        ],
+        "data_type": "nominal"
+      }
+    ]
+  }
+  ]
+

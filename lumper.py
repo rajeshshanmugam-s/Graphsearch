@@ -26,7 +26,7 @@ class DataLumper:
         logger.debug("Dataframe created")
         df = self.null_handler(df)
         logger.info("After Null handler")
-        return df.columns
+        return df.columns, df
 
     def null_handler(self, df):
         '''
