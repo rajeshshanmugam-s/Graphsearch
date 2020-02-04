@@ -5,6 +5,7 @@ var backBtn = document.getElementById("back-btn");
 var finalBtn = document.getElementById("final-btn");
 var i= 0;
 var myvar;
+var currentUploadCSVId = ''
 
 $(window).on("load", function() {
     fileupload.style.display = "block";
@@ -51,7 +52,26 @@ finalBtn.onclick = function() {
     }
 
     if(isValidated) {
-        console.log('POST the Business name', businessNames)
+        var sendJSON = {
+            id : currentUploadCSVId,
+            data: businessNames
+        }
+
+        $.ajax({
+            url: "/trainer",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(sendJSON),
+            success: function(values) {
+                console.log(values)
+            },
+            error: function(error) {
+                alert("An error occured, please try again.", error);     
+            }
+        });
+
+        console.log('POST the Business name', sendJSON)
     }
 
 }
@@ -83,6 +103,8 @@ function businessNameTemplate(values) {
                 </div>
             </div>
         `)
+
+        $('#businessTags-'+(i+1)).tagsinput('add', 'Hello' )
     }
 }
 
@@ -105,7 +127,7 @@ $("#file").change(function() {
 
             detail.style.display = "none";
             detailInfo.style.display = "block"
-            console.log(values)
+            currentUploadCSVId = values.id
             businessNameTemplate(values.data.column_names)
             $('.tagsIpt').tagsinput('add', 'some tag');
 

@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 @app.route('/')
 def main_route():
     # logger.info("Test Route")
-    return'Hello World';
+    return'Hello World'
 
 
 @app.route("/test")
@@ -55,7 +55,7 @@ def data_gunner():
 @app.route('/trainer', methods=['POST'])
 def data_trainer():
     data = request.get_json()
-    x = DataLumper('Data/' + data[0]["id"])
+    x = DataLumper('Data/' + data["id"])
     _, df = x.data_frame_loader()
     column_names = []
     cont_data = []
@@ -63,7 +63,7 @@ def data_trainer():
     business_columns = []
     cont_bus_columns = []
     cat_bus_columns = []
-    for column in data[0]['data']:
+    for column in data['data']:
         if column['type'] == "continuous":
             cont_data.append(column['column_name'])
             cont_bus_columns.append(column['business_name'])
@@ -74,8 +74,9 @@ def data_trainer():
             cat_bus_columns.append(column['business_name'])
             business_columns.append(column['business_name'])
             column_names.append(column['column_name'])
-    univariate_question_generator(column_names,business_columns,data[0]["id"])
-    y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data, id=data[0]["id"],
+    
+    univariate_question_generator(column_names,business_columns,data["id"])
+    y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data, id=data["id"],
                      cat_bus_columns=cat_bus_columns, cont_bus_columns=cont_bus_columns)
     charts = y.output_architect()
     if charts:
