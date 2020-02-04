@@ -8,7 +8,7 @@
           "Age of Employee",
           "Years"
         ],
-        "data_type": "discrete"
+        "data_type": "continuous"
       },
       {
         "column_name": "Emp_Name",
@@ -16,7 +16,7 @@
           "Name",
           "Employee Name"
         ],
-        "data_type": "nominal"
+        "data_type": "categorical"
       }
     ]
   }

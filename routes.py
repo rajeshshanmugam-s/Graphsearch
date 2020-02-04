@@ -5,6 +5,7 @@ from uuid import uuid4
 
 from lumper import DataLumper
 from adviser import GraphAdviser
+from questions_gen import univariate_question_generator
 
 app = Flask(__name__)
 
@@ -55,18 +56,25 @@ def data_gunner():
 def data_trainer():
     data = request.get_json()
     x = DataLumper('Data/' + data[0]["id"])
-    column_names, df = x.data_frame_loader()
+    _, df = x.data_frame_loader()
+    column_names = []
     cont_data = []
     cat_data = []
+    business_columns = []
     cont_bus_columns = []
     cat_bus_columns = []
     for column in data[0]['data']:
         if column['type'] == "continuous":
             cont_data.append(column['column_name'])
             cont_bus_columns.append(column['business_name'])
+            business_columns.append(column['business_name'])
+            column_names.append(column['column_name'])
         elif column['type'] == 'categorical':
             cat_data.append(column['column_name'])
             cat_bus_columns.append(column['business_name'])
+            business_columns.append(column['business_name'])
+            column_names.append(column['column_name'])
+    univariate_question_generator(column_names,business_columns,data[0]["id"])
     y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data, id=data[0]["id"],
                      cat_bus_columns=cat_bus_columns, cont_bus_columns=cont_bus_columns)
     charts = y.output_architect()

@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 flask = "*"
 pandas = "*"
+pyyaml = "*"
+snips-nlu = "*"
 
 [requires]
 python_version = "3.7"

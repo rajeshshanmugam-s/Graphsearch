@@ -70,7 +70,7 @@ class GraphAdviser:
                                       'column_name': [feature],
                                       'data_type':['categorical'],
                                       'business_name': self.cat_business_colum[idx]})
-
+            print(self.cat_business_colum, "kvfbksdhkfbksbfblblkflkb")
             # 'Need to reconsider the Histogrqam'
             univariate_charts.append({"data":{'chart_type': 'Barchart',
                                               'chart_data': barchart},
