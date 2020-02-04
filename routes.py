@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import os
 import logging
+from uuid import uuid4
 
 from lumper import DataLumper
 
@@ -9,6 +10,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+#TODO: Seperate the routes and api
 
 @app.route('/')
 def main_route():
@@ -28,9 +30,11 @@ def data_gunner():
         os.mkdir('Data')
     f = request.files['file']
     f.save('Data/'+f.filename)
-    logger.debug("File saved in the name {}".format(f.filename))
+    id = str(uuid4())
+    os.rename('Data/'+f.filename, 'Data/'+id)
+    logger.debug("File saved in the name {}".format(id))
     # ToDO: Dataframe was creating multiple times
-    x = DataLumper('Data/'+f.filename)
+    x = DataLumper('Data/'+id)
     column_names = x.data_frame_loader()
     # TODO: Remove this
     # cat_data, cont_data = x.data_type_explorer()
@@ -41,10 +45,14 @@ def data_gunner():
     names = []
     for name in column_names:
         names.append(name)
-    out = {"data": {"column_names":names}}
-    print(out)
+    out = { "id": id,
+        "data": {"column_names":names}}
     return jsonify(out)
 
+@app.route('/trainer', methods=['POST'])
+def data_trainer():
+    data = request.get_json()
+    return data
 
 
 if __name__ == '__main__':
