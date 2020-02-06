@@ -32,12 +32,18 @@ finalBtn.onclick = function() {
         }
 
         if(businessNameInArray.length == 0) {
-            $('#businessTagsWrapper-'+currentPosition+ ' .bootstrap-tagsinput').css({
-                'background-color': 'red'
+            $('#businessTagsWrapper-'+currentPosition).css({
+                'border-bottom': '1px solid red'
+            })
+            $('#businessTagsWrapper-'+currentPosition+ ' .error-label').css({
+                'color': 'red'
             })
         } else {
-            $('#businessTagsWrapper-'+currentPosition+ ' .bootstrap-tagsinput').css({
-                'background-color': 'transparent'
+            $('#businessTagsWrapper-'+currentPosition).css({
+                'border-bottom': '1px solid #E5E5E5'
+            })
+            $('#businessTagsWrapper-'+currentPosition+ ' .error-label').css({
+                'color': '#b1acac'
             })
         }
 
@@ -71,30 +77,28 @@ finalBtn.onclick = function() {
             },
             error: function(error) {
                 alert("An error occured, please try again.", error);
-                // detailInfo.style.display = "none";
             }
         });
 
         console.log('POST the Business name', sendJSON)
     }
-
 }
 
 function businessNameTemplate() {
     var values= currentUploadValue.column_names
     for(var i = 0; i < values.length; i++) {
         $('#businessNames').append(`
-            <div class="row">
+            <div class="row mb-1">
                 <div class="column-value col-4">
-                    <div class="form-group has-float-label">
+                    <div class="border-0 form-group has-float-label">
                         <input class="form-control" id="column-name-`+(i+1)+`" type="text" value="`+values[i]+`" disabled/>
-                        <label for="password">Column</label>
+                        <label>Column</label>
                     </div>
                 </div>
                 <div class="col-5">
-                    <div class="form-group has-float-label" id="businessTagsWrapper-`+(i+1)+`">
+                    <div class="form-group has-float-label error-div" id="businessTagsWrapper-`+(i+1)+`">
                         <input class="tagsIpt form-control" id="businessTags-`+(i+1)+`" type="text" data-role="tagsinput" />
-                        <label for="password">Business name</label>
+                        <label class="error-label">Business name</label>
                     </div>
                 </div>
                 <div class="col-3">
@@ -150,7 +154,7 @@ $("#file").change(function() {
         currentUploadValue = values.data
         currentUploadCSVId = values.id;
         businessNameTemplate();
-        $('.tagsIpt').tagsinput('add', 'some tag');
+        // $('.tagsIpt').tagsinput('add', 'some tag');
     }).fail(function (error) {
         alert("An error occured, please try again.", error);
     });

@@ -152,13 +152,21 @@ body {
             overflow-y: auto;
             height: 370px;
             .tag-info {
-                padding: 24px;
+                padding: 24px 24px 0px;
             }
             .form-group {
                 border-bottom: 1px solid #E5E5E5;
+                label {
+                    left: 0px !important;
+                    color: #b1acac;
+                }
             }
             .custom-select {
                 padding-bottom: 0px !important;
+                height: 34px !important;
+                &:focus {
+                    box-shadow: none !important;
+                }
             }
             .bootstrap-tagsinput {
                 padding: .375rem .75rem !important;
@@ -169,6 +177,7 @@ body {
                 font-size: 16px !important;
                 line-height: 22px !important;
                 color: #000000 !important;
+                padding-left: 0px !important;
                 label {
                     font-size: 10px !important;
                     line-height: 14px !important;
