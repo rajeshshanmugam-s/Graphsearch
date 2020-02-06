@@ -120,7 +120,6 @@ function businessNameTemplate() {
 }
 
 function questionsTemplate(value) {
-    console.log(value);
     for(var i = 0; i < value.length; i++) {
         $('#questionsTemp').append(`
             <button class="questions-btn">`+ value[i] +`</button>
@@ -209,17 +208,11 @@ $( function() {
     });
 });
 
-$("button").click(function() {
-    var test = $(this).text();
-    console.log(test)
-    $("#myInput").val(test)
-})
-
 
 $(document).ready(function() {
     $('#myInput').keyup(function() {
         searchValue= $(this).val()
-        var dataset= '{"data": "'+ searchValue +'", id: "'+ currentUploadCSVId +'"}';
+        var dataset= '{"data": "'+ searchValue +'", "id": "'+ currentUploadCSVId +'"}';
         console.log(dataset);
         $.ajax({
             url: "/search",
