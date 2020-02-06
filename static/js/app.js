@@ -9,6 +9,7 @@ var currentUploadValue = '';
 var currentUploadCSVId = ''
 var businessNames = []
 var isValidated = false
+var searchQuestion= '';
 
 $(window).on("load", function() {
     fileupload.style.display = "block";
@@ -181,44 +182,6 @@ $("#file").change(function() {
     });
 });
 
-$( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#myInput" ).autocomplete({
-        source: availableTags,
-        open: function( event, ui ) {
-            $("#myInput").addClass("intro");
-            $("#ui-id-1").css("border-top", "0px");
-        },
-        close: function(event, ui) {
-            $("#myInput").removeClass("intro");
-        }
-    });
-});
-
-
 $(document).ready(function() {
     $('#myInput').keyup(function() {
         searchValue= $(this).val()
@@ -231,7 +194,19 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: dataset,
             success: function(resp) {
-                console.log(resp)
+                console.log(resp.questions)                
+                var availableTags = resp.questions;
+                $( "#myInput" ).autocomplete({
+                    source: availableTags,
+                    open: function( event, ui ) {
+                        $("#myInput").addClass("intro");
+                        $("#ui-id-1").css("border-top", "0px");
+                    },
+                    close: function(event, ui) {
+                        $("#myInput").removeClass("intro");
+                    }
+                });
+                
             }
         })
         // $(this).val('')
