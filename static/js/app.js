@@ -75,6 +75,7 @@ finalBtn.onclick = function() {
             success: function(values) {
                 console.log(values)
                 detailInfo.style.display = "none";
+                questionsTemplate(values.questions)
             },
             error: function(error) {
                 alert("An error occured, please try again.", error);
@@ -118,6 +119,16 @@ function businessNameTemplate() {
     }
 }
 
+function questionsTemplate(value) {
+    console.log(value);
+    for(var i = 0; i < value.length; i++) {
+        $('#questionsTemp').append(`
+            <button class="questions-btn">`+ value[i] +`</button>
+        `);
+    }
+}
+
+
 // File upload
 $("#file").change(function() {
     var fd = new FormData();
@@ -155,7 +166,7 @@ $("#file").change(function() {
         currentUploadValue = values.data
         currentUploadCSVId = values.id;
         businessNameTemplate();
-        // $('.tagsIpt').tagsinput('add', 'some tag');
+        $('.tagsIpt').tagsinput('add', 'some tag');
     }).fail(function (error) {
         alert("An error occured, please try again.", error);
     });
@@ -208,7 +219,7 @@ $("button").click(function() {
 $(document).ready(function() {
     $('#myInput').keyup(function() {
         searchValue= $(this).val()
-        var dataset= '{"data": "'+ searchValue +'"}';
+        var dataset= '{"data": "'+ searchValue +'", id: "'+ currentUploadCSVId +'"}';
         console.log(dataset);
         $.ajax({
             url: "/search",
