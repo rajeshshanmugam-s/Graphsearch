@@ -71,7 +71,7 @@ finalBtn.onclick = function() {
             },
             error: function(error) {
                 alert("An error occured, please try again.", error);
-                detailInfo.style.display = "none";
+                // detailInfo.style.display = "none";
             }
         });
 
