@@ -120,11 +120,21 @@ function businessNameTemplate() {
 }
 
 function questionsTemplate(value) {
+    $('#questionsTemp').append(`<p>Suggestion:</p>`)
     for(var i = 0; i < value.length; i++) {
         $('#questionsTemp').append(`
-            <button class="questions-btn" id="questions">`+ value[i] +`</button>
+            <button class="questions-btn" id="questions-`+ i +`">`+ value[i] +`</button>
         `);
+        buttonClick(i)
     }
+}
+
+function buttonClick(index) {
+    $("#questions-"+ index).click(function() {
+        var consoleValue = $(this).text();
+        console.log(consoleValue);
+        $('input[name="searchValue"]').val(consoleValue);
+    })
 }
 
 
@@ -219,7 +229,7 @@ $(document).ready(function() {
             type: "POST",
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify(dataset),
+            data: dataset,
             success: function(resp) {
                 console.log(resp)
             }
