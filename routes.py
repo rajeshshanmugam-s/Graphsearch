@@ -76,12 +76,12 @@ def data_trainer():
             business_columns.append(column['business_name'])
             column_names.append(column['column_name'])
 
-    univariate_question_generator(column_names,business_columns,data["id"])
+    suggesting_questions = univariate_question_generator(column_names,business_columns,data["id"])
     y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data, id=data["id"],
                      cat_bus_columns=cat_bus_columns, cont_bus_columns=cont_bus_columns)
     charts = y.output_architect()
-    if charts:
-        return {"Status":True}
+    if charts and suggesting_questions:
+        return suggesting_questions
         # return jsonify(charts)
     else:
         return {"Status":False}

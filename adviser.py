@@ -38,7 +38,7 @@ class GraphAdviser:
             }
         ]
         }
-        with open('Data/'+self.id+'.txt', 'w+') as file:
+        with open('Data/'+self.id+'.json', 'w+') as file:
             json.dump(charts, file)
         return charts
 
