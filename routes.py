@@ -6,6 +6,7 @@ from uuid import uuid4
 from lumper import DataLumper
 from adviser import GraphAdviser
 from questions_gen import univariate_question_generator
+import question_recommender as qr
 
 app = Flask(__name__)
 
@@ -39,7 +40,7 @@ def data_gunner():
     x = DataLumper('Data/'+id)
     column_names, df = x.data_frame_loader()
     df.to_csv('Data/'+id)
-    # TODO: Remove this
+    # FIXME: Remove this
     # cat_data, cont_data = x.data_type_explorer()
     # logger.info("Categorical columns {}".format(cat_data))
     # logger.info("Continuous columns {}".format(cont_data))
@@ -85,6 +86,14 @@ def data_trainer():
         # return jsonify(charts)
     else:
         return {"Status":False}
+
+@app.route('/search', methods=['POST'])
+def timely_searcher():
+    data = request.get_json()
+    intents = qr.suggestion_finder(data['data'], data['id'])
+    return intents
+
+
 
 
 if __name__ == '__main__':
