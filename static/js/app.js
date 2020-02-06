@@ -122,7 +122,7 @@ function businessNameTemplate() {
 function questionsTemplate(value) {
     for(var i = 0; i < value.length; i++) {
         $('#questionsTemp').append(`
-            <button class="questions-btn">`+ value[i] +`</button>
+            <button class="questions-btn" id="questions">`+ value[i] +`</button>
         `);
     }
 }
@@ -219,7 +219,7 @@ $(document).ready(function() {
             type: "POST",
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify(searchValue),
+            data: JSON.stringify(dataset),
             success: function(resp) {
                 console.log(resp)
             }
