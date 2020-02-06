@@ -1,24 +1,176 @@
-[
-  {
-    "id": "6800e7b0-c1b7-4dc9-84a8-9fde957fc3a8",
-    "data": [
-      {
-        "column_name": "age",
-        "business_name": [
-          "Age of Employee",
-          "Years"
-        ],
-        "data_type": "continuous"
-      },
-      {
-        "column_name": "Emp_Name",
-        "business_name": [
-          "Name",
-          "Employee Name"
-        ],
-        "data_type": "categorical"
-      }
-    ]
-  }
+{
+  "id": "843e5a80-7a5e-4c86-a877-2729fe9ae649",
+  "data": [
+    {
+      "column_name": "Survived",
+      "business_name": [
+        "suv"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Pclass",
+      "business_name": [
+        "pclass"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Name",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Sex",
+      "business_name": [
+        "sex"
+      ],
+      "type": "continuous"
+    },
+    {
+      "column_name": "Age",
+      "business_name": [
+        "age"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Siblings/Spouses Aboard",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Parents/Children Aboard",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Fare",
+      "business_name": [
+        "fare",
+        "age"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Survived",
+      "business_name": [
+        "suv"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Pclass",
+      "business_name": [
+        "pclass"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Name",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Sex",
+      "business_name": [
+        "sex"
+      ],
+      "type": "continuous"
+    },
+    {
+      "column_name": "Age",
+      "business_name": [
+        "age"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Siblings/Spouses Aboard",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Parents/Children Aboard",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Fare",
+      "business_name": [
+        "fare",
+        "age"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Survived",
+      "business_name": [
+        "suv"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Pclass",
+      "business_name": [
+        "pclass"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Name",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Sex",
+      "business_name": [
+        "sex"
+      ],
+      "type": "continuous"
+    },
+    {
+      "column_name": "Age",
+      "business_name": [
+        "age"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Siblings/Spouses Aboard",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Parents/Children Aboard",
+      "business_name": [
+        "some tag"
+      ],
+      "type": "categorical"
+    },
+    {
+      "column_name": "Fare",
+      "business_name": [
+        "fare",
+        "age"
+      ],
+      "type": "categorical"
+    }
   ]
-
+}

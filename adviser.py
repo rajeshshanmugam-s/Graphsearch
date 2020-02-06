@@ -38,7 +38,7 @@ class GraphAdviser:
             }
         ]
         }
-        with open('Data/'+self.id+'.txt', 'w+') as file:
+        with open('Data/'+self.id+'.json', 'w+') as file:
             json.dump(charts, file)
         return charts
 
@@ -69,20 +69,20 @@ class GraphAdviser:
                                               'chart_data': piechart},
                                       'column_name': [feature],
                                       'data_type':['categorical'],
-                                      'business_name': self.cat_business_colum[idx]})
+                                      'business_name': self.cat_business_colum[0][idx]})
             print(self.cat_business_colum, "kvfbksdhkfbksbfblblkflkb")
             # 'Need to reconsider the Histogrqam'
             univariate_charts.append({"data":{'chart_type': 'Barchart',
                                               'chart_data': barchart},
                                       'column_name': [feature],
                                       'data_type':['categorical'],
-                                      'business_name': self.cat_business_colum[idx]})
+                                      'business_name': self.cat_business_colum[0][idx]})
 
             univariate_charts.append({"data": {'chart_type': 'Histogram',
                                                'chart_data': histogram},
                                       'column_name': [feature],
                                       'data_type': ['categorical'],
-                                      'business_name': self.cat_business_colum[idx]})
+                                      'business_name': self.cat_business_colum[0][idx]})
 
         for idx, feature in enumerate(self.continuous_data):
             logger.info("Continuous Column {}".format(feature))
@@ -123,10 +123,13 @@ class GraphAdviser:
         line_chart = []
         bivariate_charts = []
 
+        #FIXME: check for the list inside the list.
+
         logger.info("Inside Bivariate analysis")
         for idx, x_feature in enumerate(self.categorical_data):
             for idx_1, y_feature in enumerate(self.continuous_data):
                 if x_feature != y_feature:
+
                     logger.info("Category vs Continuous")
                     logger.info("X_feature: {}, y_feature: {}".format(x_feature, y_feature))
                     scatter_plot.append(helper.data_organiser(df=self.df, chart='Ordinalscatterplot', x_feature=x_feature,
@@ -141,13 +144,13 @@ class GraphAdviser:
                                                      'chart_data': line_chart},
                                              'column_name': [x_feature, y_feature],
                                              'data_type': ['categorical', 'continuous'],
-                                             'business_name': [self.cat_business_colum[idx],self.cont_business_colum[idx_1]]})
+                                             'business_name': [self.cat_business_colum[0][idx],self.cont_business_colum[idx_1]]})
 
                     bivariate_charts.append({"data":{'chart_type': 'Bar chart',
                                                      'chart_data': barchart},
                                             'column_name': [x_feature, y_feature],
                                             'data_type': ['categorical', 'continuous'],
-                                            'business_name': [self.cat_business_colum[idx],self.cont_business_colum[idx_1]]})
+                                            'business_name': [self.cat_business_colum[0][idx],self.cont_business_colum[idx_1]]})
 
         # for x_feature in self.continous_data:
         #     for y_feature in self.categorical_data:
