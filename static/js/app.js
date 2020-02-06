@@ -4,6 +4,7 @@ var detailInfo = document.getElementById("detail-info");
 var backBtn = document.getElementById("back-btn");
 var finalBtn = document.getElementById("final-btn");
 var i= 0;
+var searchValue;
 var currentUploadValue = '';
 var currentUploadCSVId = ''
 var businessNames = []
@@ -186,12 +187,39 @@ $( function() {
       "Scheme"
     ];
     $( "#myInput" ).autocomplete({
-      source: availableTags
+        source: availableTags,
+        open: function( event, ui ) {
+            $("#myInput").addClass("intro");
+            $("#ui-id-1").css("border-top", "0px");
+        },
+        close: function(event, ui) {
+            $("#myInput").removeClass("intro");
+        }
     });
 });
 
+$("button").click(function() {
+    var test = $(this).text();
+    console.log(test)
+    $("#myInput").val(test)
+})
 
-$("#myInput").keypress(() => {
-    $("#myInput").addClass("intro");
-    $("#ui-id-1").css("border-top", "0px");
+
+$(document).ready(function() {
+    $('#myInput').keyup(function() {
+        searchValue= $(this).val()
+        var dataset= '{"data": "'+ searchValue +'"}';
+        console.log(dataset);
+        $.ajax({
+            url: "/search",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(searchValue),
+            success: function(resp) {
+                console.log(resp)
+            }
+        })
+        // $(this).val('')
+    })
 })
