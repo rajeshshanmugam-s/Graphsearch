@@ -91,7 +91,7 @@ function businessNameTemplate() {
             <div class="row mb-1">
                 <div class="column-value col-4">
                     <div class="border-0 form-group has-float-label">
-                        <input class="form-control" id="column-name-`+(i+1)+`" type="text" value="`+values[i]+`" disabled/>
+                        <input class="form-control w-100" id="column-name-`+(i+1)+`" type="text" value="`+values[i]+`" disabled/>
                         <label>Column</label>
                     </div>
                 </div>
