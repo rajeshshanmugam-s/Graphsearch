@@ -16,6 +16,8 @@ q_2 = "Show me the [] in data"
 q_3 = "Segment the [] in data"
 q_4 = "Tell me the [] in data"
 
+#Fixme: Send the chart data for resposne
+
 def univariate_question_generator(column_names, business_column_names, id):
     if business_column_names:
         for idx, column in enumerate(column_names):

@@ -55,6 +55,7 @@ def data_gunner():
 @app.route('/trainer', methods=['POST'])
 def data_trainer():
     data = request.get_json()
+    logger.debug("Request for the id{}".format(data['id']))
     x = DataLumper('Data/' + data["id"])
     _, df = x.data_frame_loader()
     column_names = []
@@ -74,13 +75,14 @@ def data_trainer():
             cat_bus_columns.append(column['business_name'])
             business_columns.append(column['business_name'])
             column_names.append(column['column_name'])
-    
+
     univariate_question_generator(column_names,business_columns,data["id"])
     y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data, id=data["id"],
                      cat_bus_columns=cat_bus_columns, cont_bus_columns=cont_bus_columns)
     charts = y.output_architect()
     if charts:
         return {"Status":True}
+        # return jsonify(charts)
     else:
         return {"Status":False}
 
