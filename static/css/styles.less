@@ -23,6 +23,7 @@ body {
     background: #E5E5E5;
     height: 100%;
     width: 100%;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .chart-layout {
@@ -68,6 +69,7 @@ body {
         width: 50%;
         height: 276px;
         min-height: 276px;
+        max-width: 650px;
         .file-upload {
             position: relative;
             text-align: center;
@@ -78,6 +80,10 @@ body {
             cursor: pointer;
             min-height: 232px;
             max-height: 232px;
+            &:hover {
+                background-color: #F5F9FE;
+                border: 2px dashed #CDE1FB;
+            }
             .fileupload {
                 position: absolute;
                 width: 100%;
@@ -99,6 +105,7 @@ body {
         padding: 22px;
         width: 50%;
         max-height: 141px;
+        max-width: 650px;
         border-radius: 8px;
         .upload-content {
             border: 2px dashed #E5E5E5;
@@ -112,14 +119,19 @@ body {
                 margin-bottom: 10px;
             }
             .progress {
-                height: 2px !important;
+                height: 4px !important;
+                border-radius: 4px;
+                .progress-bar{
+                    border-radius: 4px;
+                    background-color: #9DCB3B;
+                }
             }
         }
     }
     .modal-detail {
-        width: 700px;
+        width: 800px;
         height: 80%;
-        max-height: 600px;
+        max-height: 500px;
         display: flex;
         flex-direction: column;
         padding: 0px;
@@ -140,13 +152,21 @@ body {
             overflow-y: auto;
             height: 370px;
             .tag-info {
-                padding: 24px;
+                padding: 24px 24px 0px;
             }
             .form-group {
                 border-bottom: 1px solid #E5E5E5;
+                label {
+                    left: 0px !important;
+                    color: #b1acac;
+                }
             }
             .custom-select {
                 padding-bottom: 0px !important;
+                height: 34px !important;
+                &:focus {
+                    box-shadow: none !important;
+                }
             }
             .bootstrap-tagsinput {
                 padding: .375rem .75rem !important;
@@ -157,6 +177,7 @@ body {
                 font-size: 16px !important;
                 line-height: 22px !important;
                 color: #000000 !important;
+                padding-left: 0px !important;
                 label {
                     font-size: 10px !important;
                     line-height: 14px !important;
@@ -204,11 +225,12 @@ body {
 }
 
 .bootstrap-tagsinput .tag [data-role="remove"]:after {
+    content: "X" !important;
     background: #DFDFDF;
     color: #FFFFFF;
     border-radius: 50%;
     font-weight: bolder;
-    padding: 0px 4px 1px !important
+    padding: 0px 5.24px 0px !important
 }
 
 .form-control:disabled {
