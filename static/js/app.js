@@ -183,7 +183,7 @@ $("#file").change(function() {
 });
 
 $(document).ready(function() {
-    $('#myInput').keyup(function() {
+    $('#myInput').keyup(function(e) {
         searchValue= $(this).val()
         var dataset= '{"data": "'+ searchValue +'", "id": "'+ currentUploadCSVId +'"}';
         console.log(dataset);
@@ -209,6 +209,19 @@ $(document).ready(function() {
                 
             }
         })
-        // $(this).val('')
+        if(e.which == 13) {
+            var dataEnter = '{"data": "'+ searchValue +'", "id": "'+ currentUploadCSVId +'"}';
+            $.ajax({
+                url: "/chart_finder",
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json',
+                data: dataEnter,
+                success: function(resp) {
+                    console.log(resp.questions);
+                    searchValue = $(this).val('');
+                }
+            })
+        }
     })
 })
