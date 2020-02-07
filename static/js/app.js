@@ -66,23 +66,40 @@ finalBtn.onclick = function() {
             id : currentUploadCSVId,
             data: businessNames
         }
-
+        detailInfo.style.display = "none";
+        $("#loader-icon").css({'display': 'block'})
         $.ajax({
             url: "/trainer",
             type: "POST",
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(sendJSON),
-            success: function(values) {
-                console.log(values)
-                detailInfo.style.display = "none";
-                questionsTemplate(values.questions)
-            },
-            error: function(error) {
-                alert("An error occured, please try again.", error);
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                if (xhr.upload) {
+                    xhr.upload.addEventListener('progress', function(event) {
+                        var percent = 0;
+                        var position = event.loaded || event.position;
+                        var total = event.total;
+                        if (event.lengthComputable) {
+                            percent = Math.ceil(position / total * 67);
+                        }
+                        $("#loader-progressbar").css("width", + percent +"%");
+                        $("#loader-status").text(percent +"%");
+                    }, true);
+                }
+                return xhr;
             }
-        });
-
+        }).done(function(values) {
+            for(var i = 68; i <= 100; i++) {
+                $("#loader-progressbar").css("width", + i +"%");
+                $("#loader-status").text(i +"%");
+            }
+            questionsTemplate(values.questions);
+            $("#loader-icon").css({'display': 'none'});
+        }).fail(function(error) {
+            alert("An error occured, please try again.", error);
+        })
         console.log('POST the Business name', sendJSON)
     }
 }
@@ -164,7 +181,7 @@ $("#file").change(function() {
                     if (event.lengthComputable) {
                         percent = Math.ceil(position / total * 100);
                     }
-                    $(".progress-bar").css("width", + percent +"%");
+                    $("#progressbar").css("width", + percent +"%");
                     $("#status").text(percent +"%");
                 }, true);
             }
@@ -211,6 +228,7 @@ $(document).ready(function() {
         })
         if(e.which == 13) {
             var dataEnter = '{"data": "'+ searchValue +'", "id": "'+ currentUploadCSVId +'"}';
+            console.log(dataEnter)
             $.ajax({
                 url: "/chart_finder",
                 type: "POST",
@@ -220,6 +238,9 @@ $(document).ready(function() {
                 success: function(resp) {
                     console.log(resp.questions);
                     searchValue = $(this).val('');
+                },
+                error: function(error) {
+                    console.log(error)
                 }
             })
         }

@@ -46,8 +46,7 @@
                     <h5>Upload file: Poject orange</h5>
                     <p><span id="status">0%</span> | 10 seconds left</p>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" id="progressbar">
-                          <span class="sr-only">70% Complete</span>
+                        <div class="progress-bar" id="progressbar">
                         </div>
                     </div>
                 </div>
@@ -71,6 +70,21 @@
                 </div>
             </div>
         </section>
+
+        <!-- Receiving information Progess bar -->
+        <section id="loader-icon" class="modal">
+            <div class="model-info modal-upload">
+                <div class="upload-content">
+                    <h5>Receiving information: Poject orange <img class="loader-img" src="/static/image/loader.svg"/></h5>
+                    <p><span id="loader-status">0%</span></p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" id="loader-progressbar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <!-- JavaScript -->
         <script src="/static/js/jquery-3.1.1.min.js"></script>
