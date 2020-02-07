@@ -13,6 +13,7 @@ var searchQuestion= '';
 
 $(window).on("load", function() {
     fileupload.style.display = "block";
+    $("#chart-diagram").css({"display": "none"})
 });
 
 // back button
@@ -24,7 +25,7 @@ backBtn.onclick = function() {
     fileupload.style.display = "block";
 }
 
-function businessName() {
+function businessName() { // error in submit
     $('#businessNames').children('.row').each(function(e) {
         var currentPosition = e + 1
         var businessNameInArray = $('#businessTags-'+currentPosition).tagsinput('items')
@@ -146,7 +147,7 @@ function businessNameTemplate() {
 
 // Remove data from business name template
 function removeData(id) {
-    $('#businessNames').children("#remove-full-id"+id).empty();
+    $('#businessNames').children("#remove-full-id"+id).remove();
 } 
 
 // Questions Template
@@ -253,6 +254,7 @@ $(document).ready(function() {
                 success: function(resp) {
                     console.log(resp.questions);
                     searchValue = $(this).val('');
+                    $("#chart-diagram").css({"display": "block"})
                 },
                 error: function(error) {
                     console.log(error)
