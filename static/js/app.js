@@ -15,6 +15,7 @@ $(window).on("load", function() {
     fileupload.style.display = "block";
 });
 
+// back button
 backBtn.onclick = function() {
     $('#businessNames').empty();
     $('#file').val('');
@@ -23,7 +24,7 @@ backBtn.onclick = function() {
     fileupload.style.display = "block";
 }
 
-finalBtn.onclick = function() {
+function businessName() {
     $('#businessNames').children('.row').each(function(e) {
         var currentPosition = e + 1
         var businessNameInArray = $('#businessTags-'+currentPosition).tagsinput('items')
@@ -32,7 +33,6 @@ finalBtn.onclick = function() {
             business_name: businessNameInArray,
             type: $('#data-type-'+currentPosition).val()
         }
-
         if(businessNameInArray.length == 0) {
             $('#businessTagsWrapper-'+currentPosition).css({
                 'border-bottom': '1px solid red'
@@ -60,12 +60,17 @@ finalBtn.onclick = function() {
             isValidated = true
         }
     }
+}
 
+// Submit button
+finalBtn.onclick = function() {
+    businessName()
     if(isValidated) {
         var sendJSON = {
             id : currentUploadCSVId,
             data: businessNames
         }
+        console.log(sendJSON)
         detailInfo.style.display = "none";
         $("#loader-icon").css({'display': 'block'})
         $.ajax({
@@ -104,12 +109,13 @@ finalBtn.onclick = function() {
     }
 }
 
+// Business Name Template
 function businessNameTemplate() {
     var values= currentUploadValue.column_names
     for(var i = 0; i < values.length; i++) {
         $('#businessNames').append(`
-            <div class="row mb-1">
-                <div class="column-value col-4">
+            <div class="row mb-1" id="remove-full-id`+(i+1)+`">
+                <div class="column-value col-4" onclick="removeData(`+(i+1)+`)">
                     <div class="border-0 form-group has-float-label">
                         <input class="form-control w-100" id="column-name-`+(i+1)+`" type="text" value="`+values[i]+`" disabled/>
                         <label>Column</label>
@@ -137,16 +143,24 @@ function businessNameTemplate() {
     }
 }
 
+
+// Remove data from business name template
+function removeData(id) {
+    $('#businessNames').children("#remove-full-id"+id).empty();
+} 
+
+// Questions Template
 function questionsTemplate(value) {
-    $('#questionsTemp').append(`<p>Suggestion:</p>`)
-    for(var i = 0; i < value.length; i++) {
+    for(var i = 0; i < 6; i++) {
+        var randomItem = value[Math.floor(Math.random()*value.length)]
         $('#questionsTemp').append(`
-            <button class="questions-btn" id="questions-`+ i +`">`+ value[i] +`</button>
+            <button class="questions-btn" id="questions-`+ i +`">`+ randomItem +`</button>
         `);
         buttonClick(i)
     }
 }
 
+// Suggestion Click
 function buttonClick(index) {
     $("#questions-"+ index).click(function() {
         var consoleValue = $(this).text();
@@ -199,6 +213,7 @@ $("#file").change(function() {
     });
 });
 
+// Search Bar
 $(document).ready(function() {
     $('#myInput').keyup(function(e) {
         searchValue= $(this).val()
