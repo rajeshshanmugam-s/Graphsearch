@@ -252,9 +252,9 @@ $(document).ready(function() {
                 contentType: 'application/json',
                 data: dataEnter,
                 success: function(resp) {
-                    console.log(resp.questions);
                     searchValue = $(this).val('');
                     $("#chart-diagram").css({"display": "block"})
+                    createChart(resp)
                 },
                 error: function(error) {
                     console.log(error)
@@ -262,4 +262,98 @@ $(document).ready(function() {
             })
         }
     })
+
+    // check chart type
+    function createChart(data) {
+        if(data.chart_type == "piechart") {
+            pieChart()
+        }
+        else if(data.chart_type == "Barchart") {
+            barChart(data)
+        }
+        else if(data.chart_type == "Histogram") {
+            histogram(data)
+        }
+        else if(data.chart_type == "Boxplot") {
+            boxplot(data)
+        }
+        else if(data.chart_type == "linechart") {
+            lineChart(data)
+        } 
+        else {
+            console.log("diff chart")
+        }
+    }
+
+    // function to create piechart
+    function pieChart() {
+        var width = 450
+        var height = 450
+        var margin = 40
+        var radius = Math.min(width, height) / 2 - margin
+        var svg = d3.select("div.chart-list")
+                    .append("div")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        var data = {a: 9, b: 20, c:30, d:8, e:12}
+        var color = d3.scaleOrdinal()
+                    .domain(data)
+                    .range(d3.schemeSet2);
+        var pie = d3.pie()
+                    .value(function(d) {
+                        return d.value; 
+                    })
+        var data_ready = pie(d3.entries(data))
+        var arcGenerator = d3.arc()
+                            .innerRadius(0)
+                            .outerRadius(radius)
+        svg
+            .selectAll('mySlices')
+            .data(data_ready)
+            .enter()
+            .append('text')
+            .text(function(d){
+                return "grp " + d.data.key
+            })
+            .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+            .style("text-anchor", "middle")
+            .style("font-size", 17)
+        svg
+            .selectAll('mySlices')
+            .data(data_ready)
+            .enter()
+            .append('path')
+            .attr('d', arcGenerator)
+            .attr('fill', function(d){
+                return(color(d.data.key)) 
+            })
+            .attr("stroke", function(d) {
+                return(color(d.data.key))
+            })
+            .style("stroke-width", "1px")
+            .style("opacity", 0.7)
+    }
+
+    // function to create barchart
+    function barChart(data) {
+        console.log(data)
+    }
+
+    // function to create histogram
+    function histogram(data) {
+        console.log(data)
+    }
+
+    // function to create boxplot
+    function boxplot(data) {
+        console.log(data)
+    }
+
+    // function to create linechart
+    function lineChart(data) {
+        console.log(data)
+    }
 })
