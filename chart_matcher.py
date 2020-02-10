@@ -3,7 +3,6 @@ import json
 
 #Fixme: rewrite the below function for directly extracting values from the dataframe itself
 
-
 def data_finder(column_name, id):
     with open('Data/'+id+'.txt') as file:
         data = json.load(file)

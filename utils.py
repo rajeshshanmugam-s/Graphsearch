@@ -31,6 +31,7 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
                       'y': 'Count'},
             # 'values': {'x': x_feature_data,
             #            'y': y_feature_data},
+            'chart_type': chart,
             'values': out_df,
             'Legends': {0: feature,
                         1: 'Count'}
@@ -56,6 +57,7 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
         feature_data = groupby_frame_generator(df,feature,chart_name=chart)
         df_data = {
             'Title': feature,
+            'chart_type': chart,
             'Label': {
                 'x': feature
             },
@@ -76,6 +78,7 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
             #TODO: Need to change the x and y values based on frontend
             df_data = {
                 'Title': x_feature + ' vs ' + y_feature,
+                'chart_type': chart,
                 'Label': {'x': x_feature,
                           'y': y_feature},
                 'values': {'data': grouped_data},
@@ -88,6 +91,7 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
             y_feature_data = json_builder(df[y_feature])
             df_data = {
                 'Title': x_feature+' vs '+ y_feature,
+                'chart_type': chart,
                 'Label': {'x': x_feature,
                           'y': y_feature},
                 'values': {'x': x_feature_data,
