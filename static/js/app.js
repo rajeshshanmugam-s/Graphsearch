@@ -13,8 +13,10 @@ var searchQuestion= '';
 
 $(window).on("load", function() {
     fileupload.style.display = "block";
+    $("#chart-diagram").css({"display": "none"})
 });
 
+// back button
 backBtn.onclick = function() {
     $('#businessNames').empty();
     $('#file').val('');
@@ -23,7 +25,7 @@ backBtn.onclick = function() {
     fileupload.style.display = "block";
 }
 
-finalBtn.onclick = function() {
+function businessName() { // error in submit
     $('#businessNames').children('.row').each(function(e) {
         var currentPosition = e + 1
         var businessNameInArray = $('#businessTags-'+currentPosition).tagsinput('items')
@@ -32,7 +34,6 @@ finalBtn.onclick = function() {
             business_name: businessNameInArray,
             type: $('#data-type-'+currentPosition).val()
         }
-
         if(businessNameInArray.length == 0) {
             $('#businessTagsWrapper-'+currentPosition).css({
                 'border-bottom': '1px solid red'
@@ -60,39 +61,62 @@ finalBtn.onclick = function() {
             isValidated = true
         }
     }
+}
 
+// Submit button
+finalBtn.onclick = function() {
+    businessName()
     if(isValidated) {
         var sendJSON = {
             id : currentUploadCSVId,
             data: businessNames
         }
-
+        console.log(sendJSON)
+        detailInfo.style.display = "none";
+        $("#loader-icon").css({'display': 'block'})
         $.ajax({
             url: "/trainer",
             type: "POST",
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(sendJSON),
-            success: function(values) {
-                console.log(values)
-                detailInfo.style.display = "none";
-                questionsTemplate(values.questions)
-            },
-            error: function(error) {
-                alert("An error occured, please try again.", error);
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                if (xhr.upload) {
+                    xhr.upload.addEventListener('progress', function(event) {
+                        var percent = 0;
+                        var position = event.loaded || event.position;
+                        var total = event.total;
+                        if (event.lengthComputable) {
+                            percent = Math.ceil(position / total * 67);
+                        }
+                        $("#loader-progressbar").css("width", + percent +"%");
+                        $("#loader-status").text(percent +"%");
+                    }, true);
+                }
+                return xhr;
             }
-        });
-
+        }).done(function(values) {
+            for(var i = 68; i <= 100; i++) {
+                $("#loader-progressbar").css("width", + i +"%");
+                $("#loader-status").text(i +"%");
+            }
+            questionsTemplate(values.questions);
+            $("#loader-icon").css({'display': 'none'});
+        }).fail(function(error) {
+            alert("An error occured, please try again.", error);
+        })
         console.log('POST the Business name', sendJSON)
     }
 }
 
+// Business Name Template
 function businessNameTemplate() {
     var values= currentUploadValue.column_names
     for(var i = 0; i < values.length; i++) {
         $('#businessNames').append(`
-            <div class="row mb-1">
-                <div class="column-value col-4">
+            <div class="row mb-1" id="remove-full-id`+(i+1)+`">
+                <div class="column-value col-4" onclick="removeData(`+(i+1)+`)">
                     <div class="border-0 form-group has-float-label">
                         <input class="form-control w-100" id="column-name-`+(i+1)+`" type="text" value="`+values[i]+`" disabled/>
                         <label>Column</label>
@@ -120,16 +144,24 @@ function businessNameTemplate() {
     }
 }
 
+
+// Remove data from business name template
+function removeData(id) {
+    $('#businessNames').children("#remove-full-id"+id).remove();
+} 
+
+// Questions Template
 function questionsTemplate(value) {
-    $('#questionsTemp').append(`<p>Suggestion:</p>`)
-    for(var i = 0; i < value.length; i++) {
+    for(var i = 0; i < 6; i++) {
+        var randomItem = value[Math.floor(Math.random()*value.length)]
         $('#questionsTemp').append(`
-            <button class="questions-btn" id="questions-`+ i +`">`+ value[i] +`</button>
+            <button class="questions-btn" id="questions-`+ i +`">`+ randomItem +`</button>
         `);
         buttonClick(i)
     }
 }
 
+// Suggestion Click
 function buttonClick(index) {
     $("#questions-"+ index).click(function() {
         var consoleValue = $(this).text();
@@ -164,7 +196,7 @@ $("#file").change(function() {
                     if (event.lengthComputable) {
                         percent = Math.ceil(position / total * 100);
                     }
-                    $(".progress-bar").css("width", + percent +"%");
+                    $("#progressbar").css("width", + percent +"%");
                     $("#status").text(percent +"%");
                 }, true);
             }
@@ -182,6 +214,7 @@ $("#file").change(function() {
     });
 });
 
+// Search Bar
 $(document).ready(function() {
     $('#myInput').keyup(function(e) {
         searchValue= $(this).val()
@@ -211,6 +244,7 @@ $(document).ready(function() {
         })
         if(e.which == 13) {
             var dataEnter = '{"data": "'+ searchValue +'", "id": "'+ currentUploadCSVId +'"}';
+            console.log(dataEnter)
             $.ajax({
                 url: "/chart_finder",
                 type: "POST",
@@ -220,6 +254,10 @@ $(document).ready(function() {
                 success: function(resp) {
                     console.log(resp.questions);
                     searchValue = $(this).val('');
+                    $("#chart-diagram").css({"display": "block"})
+                },
+                error: function(error) {
+                    console.log(error)
                 }
             })
         }

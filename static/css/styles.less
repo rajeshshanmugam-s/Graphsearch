@@ -7,20 +7,26 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     #myInput {
         background-image: url('/static/image/search-icon.svg');
-        background-position: 10px 8px;
+        background-position: 14px 10px;
         background-repeat: no-repeat;
         width: 768px;
         font-size: 20px;
-        padding: 12px 20px 12px 40px;
+        padding: 12px 20px 12px 44px;
         height: 40px;
         border: 1px solid #E5E5E5;
         box-sizing: border-box;
         border-radius: 8px;
+        &::-webkit-input-placeholder {
+            color: #999;
+        }
+        &::-moz-placeholder {
+            color: #999;
+        }
     }
 }
 
 body {
-    background: #E5E5E5;
+    background: #F4F7FB;
     height: 100%;
     width: 100%;
     font-family: 'Open Sans', sans-serif;
@@ -34,23 +40,35 @@ body {
             font-size: 14px;
             width: 100%;
         }
-        padding: 24px 0px 0px;
-        width: 768px;
         .questions-btn {
-            background-color: #9DCB3B;
-            border: 0;
-            color: #fff;
+            background: #FFFFFF;
+            border: 2px solid #75B0FF;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            border-radius: 6px;
+            color: rgba(85, 85, 85, 0.6);
             font-size: 14px;
-            padding: 8px 16px;
-            margin: 0;
+            padding: 0px 16px;
             height: 36px;
             font-weight: 700;
             cursor: pointer;
             outline: 0;
-            border-radius: 16px;
-            margin-bottom: 8px;
-            margin-right: 8px;
+            margin-bottom: 16px;
+            margin-right: 16px;
+            &:hover {
+                background: #F5F9FE;
+            }
         }
+    }
+    .chart-list {
+        background: #FFFFFF;
+        border: 2px solid #E5E5E5;
+        box-sizing: border-box;
+        border-radius: 8px;
+    }
+    .append-charts {
+        padding: 16px 0px 0px;
+        width: 768px;
     }
 }
 
@@ -145,7 +163,8 @@ body {
             .progress {
                 height: 4px !important;
                 border-radius: 4px;
-                .progress-bar{
+                .progress-bar {
+                    width: 0%;
                     border-radius: 4px;
                     background-color: #9DCB3B;
                 }
@@ -237,6 +256,10 @@ body {
             }
         }
     }
+    .loader-img {
+        height: 20px;
+        width: 20px;
+    }
 }
 
 
@@ -268,14 +291,14 @@ body {
 .ui-widget.ui-widget-content {
     // display: block !important;
     z-index: 1050;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #E5E5E5 !important;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     border-radius: 0px 0px 8px 8px;
-    max-height: 270px;
+    max-height: 280px;
     overflow-y: auto;
     overflow-x: hidden;
     .ui-menu-item {
-        font-size: 16px;
+        font-size: 18px;
         line-height: 19px;
         color: #000000;
     }
