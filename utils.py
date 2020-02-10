@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+#Fixme: Change the output structure of the Histogram
 
 def json_builder(df, feature=None, x_feature=None, y_feature=None):
     '''
@@ -21,33 +22,52 @@ def json_builder(df, feature=None, x_feature=None, y_feature=None):
 
 
 def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
-    if feature and chart != 'Histogram':
-        x_feature_data, y_feature_data = groupby_frame_generator(df,feature)
+    if feature and chart != 'Histogram' and chart != 'BoxPlot':
+        # x_feature_data, y_feature_data = groupby_frame_generator(df,feature)
+        out_df = groupby_frame_generator(df,feature)
         df_data = {
             'Title': feature,
             'Label': {'x': feature,
                       'y': 'Count'},
-            'values': {'x': x_feature_data,
-                       'y': y_feature_data},
+            # 'values': {'x': x_feature_data,
+            #            'y': y_feature_data},
+            'values': out_df,
             'Legends': {0: feature,
                         1: 'Count'}
         }
         logger.debug("Univariate For {}, chart {}".format(feature, chart))
-    elif feature and (chart == 'Histogram' or chart == 'barchart'):
-        feature_data = json_builder(df, feature)
+    # elif feature and (chart == 'Histogram' or chart == 'barchart'):
+    #     #Fixme: check whether it is a right way to do it
+    #     feature_data = json_builder(df, feature)
+    #     df_data = {
+    #         'Title': feature,
+    #         'Label': {
+    #             'x': feature
+    #         },
+    #         'values': {
+    #             'x': feature_data
+    #         },
+    #         'Legends': {
+    #             0: feature
+    #         }
+    #     }
+    #     logger.debug("Univariate For {} chart {} x: {}".format(feature, chart, feature))
+    elif feature and chart == 'BoxPlot' or chart == 'Histogram':
+        feature_data = groupby_frame_generator(df,feature,chart_name=chart)
         df_data = {
             'Title': feature,
             'Label': {
                 'x': feature
             },
             'values': {
-                'x': feature_data
+                'Data': feature_data
             },
             'Legends': {
                 0: feature
             }
         }
         logger.debug("Univariate For {} chart {} x: {}".format(feature, chart, feature))
+
     elif x_feature != y_feature:
         logger.info("Bivariate x_feature:{}, y_feature:{}".format(x_feature, y_feature))
         if chart == 'Barchart' or chart == 'Histogram':
@@ -79,13 +99,18 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
     return df_data
 
 
-def groupby_frame_generator(df,feature=None,x_feature=None, y_feature=None):
-    if feature:
+def groupby_frame_generator(df,feature=None,x_feature=None, y_feature=None, chart_name=None):
+    if feature and not chart_name:
         df = pd.DataFrame({'count': df.groupby(df[feature]).size()}).reset_index()
-        x_value = json_builder(df[feature])
-        y_value = json_builder(df['count'])
+        # x_value = json_builder(df[feature])
+        # y_value = json_builder(df['count'])
+        out_df = json_builder(df)
         logger.debug("Univariate Groupby feature:{}".format(feature))
-        return x_value, y_value
+        # return x_value, y_value
+        return out_df
+    elif feature and chart_name:
+        out_df = json_builder(df[feature])
+        return out_df
     elif x_feature and y_feature:
         df = pd.DataFrame({'count': df.groupby([x_feature, y_feature]).size()}).reset_index()
         feature_data = json_builder(df)
@@ -95,3 +120,9 @@ def groupby_frame_generator(df,feature=None,x_feature=None, y_feature=None):
         logger.debug("Biavriate Groupby x_feature: {}, y_feature: {}".format(x_feature, y_feature))
         return feature_data
 
+
+# import pandas as pd
+# from pprint import pprint
+#
+# df = pd.read_csv('/Users/rajesh/Desktop/poc-csv-nlp-search/Data/e352007d-eeac-4c36-bebc-d462ac0a1a21')
+# pprint(data_organiser(chart='Histogram', feature='PassengerId', df=df))

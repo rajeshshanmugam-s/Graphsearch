@@ -7,6 +7,8 @@ from lumper import DataLumper
 from adviser import GraphAdviser
 from questions_gen import univariate_question_generator
 import question_recommender as qr
+from nlp_engine import intents_generator
+from chart_matcher import data_finder
 
 app = Flask(__name__)
 
@@ -78,7 +80,7 @@ def data_trainer():
             column_names.append(column['column_name'])
 
     suggesting_questions = univariate_question_generator(column_names,business_columns,data["id"])
-    y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data, id=data["id"],
+    y = GraphAdviser(dataframe=df[:10], continous_data=cont_data, categorical_data=cat_data, id=data["id"],
                      cat_bus_columns=cat_bus_columns, cont_bus_columns=cont_bus_columns)
     charts = y.output_architect()
     if charts and suggesting_questions:
@@ -92,6 +94,15 @@ def timely_searcher():
     data = request.get_json()
     intents = qr.suggestion_finder(data['data'], data['id'])
     return intents
+
+@app.route('/chart_finder', methods=['POST'])
+def query_matcher():
+    query = request.get_json()
+    question = query['data']
+    id = query['id']
+    input_data, intents, column_name = intents_generator(question, id)
+    return data_finder(column_name, id)
+
 
 
 

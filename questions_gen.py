@@ -9,6 +9,7 @@ import yaml
 import logging
 import random
 
+
 logger = logging.getLogger(__name__)
 
 #fixme: write a condition in univariate question generator

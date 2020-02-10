@@ -6,6 +6,6 @@ def suggestion_finder(query, id):
     questions = []
     for intents in docs:
         for intent in intents['utterances']:
-            if query in intent:
+            if query.lower() in intent.lower():
                 questions.append(intent)
     return {"questions":questions}
