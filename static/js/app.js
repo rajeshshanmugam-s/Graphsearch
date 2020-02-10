@@ -266,7 +266,7 @@ $(document).ready(function() {
     // check chart type
     function createChart(data) {
         if(data.chart_type == "piechart") {
-            pieChart()
+            pieChart(data)
         }
         else if(data.chart_type == "Barchart") {
             barChart(data)
@@ -286,7 +286,8 @@ $(document).ready(function() {
     }
 
     // function to create piechart
-    function pieChart() {
+    function pieChart(data) {
+        console.log(data)
         var width = 450
         var height = 450
         var margin = 40
@@ -298,15 +299,15 @@ $(document).ready(function() {
                     .attr("height", height)
                     .append("g")
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-        var data = {a: 9, b: 20, c:30, d:8, e:12}
+        // var data = {a: 9, b: 20, c:30, d:8, e:12}
         var color = d3.scaleOrdinal()
-                    .domain(data)
+                    .domain(data.values)
                     .range(d3.schemeSet2);
         var pie = d3.pie()
                     .value(function(d) {
                         return d.value; 
                     })
-        var data_ready = pie(d3.entries(data))
+        var data_ready = pie(d3.entries(data.values))
         var arcGenerator = d3.arc()
                             .innerRadius(0)
                             .outerRadius(radius)
@@ -316,7 +317,7 @@ $(document).ready(function() {
             .enter()
             .append('text')
             .text(function(d){
-                return "grp " + d.data.key
+                return d.data.key
             })
             .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
             .style("text-anchor", "middle")
