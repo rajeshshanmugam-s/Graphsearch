@@ -15,11 +15,10 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-#TODO: Seperate the routes and api
 
 @app.route('/')
 def main_route():
-    # logger.info("Test Route")
+    logger.info("Test Route")
     return'Hello World'
 
 
@@ -30,36 +29,37 @@ def basic_template():
 
 @app.route('/upload', methods=['POST'])
 def data_gunner():
+    '''
+    CSV file will be received as a response. CSV file is stored under a unique id, CSV will be
+    loaded as a data frame and column names of the df will be returned.
+    :return: Column names in the csv file.
+    '''
     if not os.path.exists('Data'):
         logger.info("Creating Data Folder")
         os.mkdir('Data')
     f = request.files['file']
-    f.save('Data/'+f.filename)
+
     id = str(uuid4())
-    os.rename('Data/'+f.filename, 'Data/'+id)
+    f.save('Data/'+id+'.csv')
     logger.debug("File saved in the name {}".format(id))
-    # ToDO: Dataframe was creating multiple times
-    x = DataLumper('Data/'+id)
+
+    x = DataLumper('Data/'+id+'.csv')
     column_names, df = x.data_frame_loader()
-    df.to_csv('Data/'+id)
-    # FIXME: Remove this
-    # cat_data, cont_data = x.data_type_explorer()
-    # logger.info("Categorical columns {}".format(cat_data))
-    # logger.info("Continuous columns {}".format(cont_data))
-    # y = GraphAdviser(dataframe=df, continous_data=cont_data, categorical_data=cat_data)
-    # charts = y.output_architect()
+
     names = []
     for name in column_names:
         names.append(name)
-    out = { "id": id,
-        "data": {"column_names":names}}
+    out = {
+        "id": id,
+        "data": {"column_names":names}
+    }
     return jsonify(out)
 
 @app.route('/trainer', methods=['POST'])
 def data_trainer():
     data = request.get_json()
     logger.debug("Request for the id{}".format(data['id']))
-    x = DataLumper('Data/' + data["id"])
+    x = DataLumper('Data/' + data["id"]+'.csv')
     _, df = x.data_frame_loader()
     column_names = []
     cont_data = []
