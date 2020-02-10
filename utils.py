@@ -22,8 +22,7 @@ def json_builder(df, feature=None, x_feature=None, y_feature=None):
 
 
 def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
-    if feature and chart != 'Histogram' and chart != 'BoxPlot':
-            # and chart != 'piechart':
+    if feature and chart != 'Histogram' and chart != 'BoxPlot' and chart != 'piechart':
         # x_feature_data, y_feature_data = groupby_frame_generator(df,feature)
         out_df = groupby_frame_generator(df,feature)
         df_data = {
@@ -39,19 +38,20 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
         }
         logger.debug("Univariate For {}, chart {}".format(feature, chart))
 
-    # elif feature and chart == 'piechart':
-    #     out_df = df.set_index(df.columns[0]).to_dict()['count']
-    #     df_data = {
-    #         'Title': feature,
-    #         'Label': {'x': feature,
-    #                   'y': 'Count'},
-    #         # 'values': {'x': x_feature_data,
-    #         #            'y': y_feature_data},
-    #         'chart_type': chart,
-    #         'values': out_df,
-    #         'Legends': {0: feature,
-    #                     1: 'Count'}
-    #     }
+    elif feature and chart == 'piechart':
+        out_df = pd.DataFrame({'count': df.groupby(df[feature]).size()}).reset_index()
+        out_df = out_df.set_index(out_df.columns[0]).to_dict()['count']
+        df_data = {
+            'Title': feature,
+            'Label': {'x': feature,
+                      'y': 'Count'},
+            # 'values': {'x': x_feature_data,
+            #            'y': y_feature_data},
+            'chart_type': chart,
+            'values': out_df,
+            'Legends': {0: feature,
+                        1: 'Count'}
+        }
         logger.debug("Univariate For {}, chart {}".format(feature, chart))
 
     elif feature and chart == 'BoxPlot' or chart == 'Histogram':
