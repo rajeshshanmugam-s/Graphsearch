@@ -30,7 +30,7 @@ class GraphAdviser:
                 "univariate":self.univariate_analysis()
             },
             {
-                'bivariate': self.bivariate_analysis()
+                "bivariate": self.bivariate_analysis()
             }
         ]
         }
@@ -61,28 +61,28 @@ class GraphAdviser:
             # plotter.univariate_barchart_maker(self.df, feature)
             # scatter_plot.append(helper.data_organiser(feature=feature, df=self.df, aggregate='count'))
 
-            univariate_charts.append({'chart_type': 'piechart',
-                                      'chart_data': piechart,
-                                      'column_name': [feature],
-                                      'data_type':['categorical'],
-                                      'business_name': self.cat_business_colum[0][idx],
-                                      'analysis_name': 'Univariate Analysis'
+            univariate_charts.append({"chart_type": "piechart",
+                                      "chart_data": piechart,
+                                      "column_name": [feature],
+                                      "data_type":['categorical'],
+                                      "business_name": self.cat_business_colum[0][idx],
+                                      "analysis_name": "Univariate Analysis"
                                       })
             # print(self.cat_business_colum, "kvfbksdhkfbksbfblblkflkb")
             # 'Need to reconsider the Histogrqam'
-            univariate_charts.append({'chart_type': 'Barchart',
-                                      'chart_data': barchart,
-                                      'column_name': [feature],
-                                      'data_type':['categorical'],
-                                      'business_name': self.cat_business_colum[0][idx],
-                                      'analysis_name': 'Univariate Analysis'})
+            univariate_charts.append({"chart_type": "Barchart",
+                                      "chart_data": barchart,
+                                      "column_name": [feature],
+                                      "data_type":['categorical'],
+                                      "business_name": self.cat_business_colum[0][idx],
+                                      "analysis_name": "Univariate Analysis"})
 
-            univariate_charts.append({'chart_type': 'Histogram',
-                                       'chart_data': histogram,
-                                      'column_name': [feature],
-                                      'data_type': ['categorical'],
-                                      'business_name': self.cat_business_colum[0][idx],
-                                      'analysis_name': 'Univariate Analysis'})
+            univariate_charts.append({"chart_type": "Histogram",
+                                       "chart_data": histogram,
+                                      "column_name": [feature],
+                                      "data_type": ['categorical'],
+                                      "business_name": self.cat_business_colum[0][idx],
+                                      "analysis_name": "Univariate Analysis"})
 
         for idx, feature in enumerate(self.continuous_data):
             logger.info("Continuous Column {}".format(feature))
@@ -98,12 +98,12 @@ class GraphAdviser:
             # line_plot.append(helper.data_organiser(feature=feature, df=self.df, chart='LinePlot'))
             # plotter.univariate_line_plot_maker(df=self.df, column=feature)
 
-            univariate_charts.append({'chart_type': 'Boxplot',
-                                    'chart_data': box_plot,
-                                      'column_name': [feature],
-                                      'data_type': ['continuous'],
-                                      'business_name': self.cont_business_colum[idx],
-                                      'analysis_name': 'Univariate Analysis'})
+            univariate_charts.append({"chart_type": "Boxplot",
+                                    "chart_data": box_plot,
+                                      "column_name": [feature],
+                                      "data_type": ['continuous'],
+                                      "business_name": self.cont_business_colum[idx],
+                                      "analysis_name": "Univariate Analysis"})
 
         # univariate_charts.append({'chart_type': 'Lineplot',
         #                           'chart_data': line_plot})
@@ -141,19 +141,19 @@ class GraphAdviser:
                     line_chart.append(helper.data_organiser(df=self.df, chart='linechart', x_feature=x_feature,
                                                             y_feature=y_feature))
 
-                    bivariate_charts.append({'chart_type': 'Line Chart',
-                                             'chart_data': line_chart,
-                                             'column_name': [x_feature, y_feature],
-                                             'data_type': ['categorical', 'continuous'],
-                                             'business_name': [self.cat_business_colum[0][idx],self.cont_business_colum[idx_1]],
-                                             'analysis_name': 'Bivariate Analysis'})
+                    bivariate_charts.append({"chart_type": "Line Chart",
+                                             "chart_data": line_chart,
+                                             "column_name": [x_feature, y_feature],
+                                             "data_type": ['categorical', 'continuous'],
+                                             "business_name": [self.cat_business_colum[0][idx],self.cont_business_colum[idx_1]],
+                                             "analysis_name": "Bivariate Analysis"})
 
-                    bivariate_charts.append({'chart_type': 'Bar chart',
-                                             'chart_data': barchart,
-                                            'column_name': [x_feature, y_feature],
-                                            'data_type': ['categorical', 'continuous'],
-                                            'business_name': [self.cat_business_colum[0][idx],self.cont_business_colum[idx_1]],
-                                             'analysis_name': 'Bivariate Analysis'})
+                    bivariate_charts.append({"chart_type": "Bar chart",
+                                             "chart_data": barchart,
+                                            "column_name": [x_feature, y_feature],
+                                            "data_type": ['categorical', 'continuous'],
+                                            "business_name": [self.cat_business_colum[0][idx],self.cont_business_colum[idx_1]],
+                                             "analysis_name": "Bivariate Analysis"})
 
         # for x_feature in self.continous_data:
         #     for y_feature in self.categorical_data:
@@ -176,19 +176,19 @@ class GraphAdviser:
                     # plotter.bivariate_line_plot_maker(df=self.df, x=x_feature, y=y_feature)
 
 
-                    bivariate_charts.append({'chart_type':'scatter plot',
-                                             'chart_data': scatter_plot,
-                                             'column_name': [x_feature, y_feature],
-                                             'data_type': ['continuous', 'continuous'],
-                                             'business_name': [self.cont_business_colum[idx],self.cont_business_colum[idx_1]],
-                                             'analysis_name': 'Bivariate Analysis'})
+                    bivariate_charts.append({"chart_type":"scatter plot",
+                                             "chart_data": scatter_plot,
+                                             "column_name": [x_feature, y_feature],
+                                             "data_type": ['continuous', 'continuous'],
+                                             "business_name": [self.cont_business_colum[idx],self.cont_business_colum[idx_1]],
+                                             "analysis_name": 'Bivariate Analysis'})
 
-                    bivariate_charts.append({'chart_type': 'Histogram',
-                                             'chart_data': histogram,
-                                             'column_name': [x_feature, y_feature],
-                                             'data_type': ['continuous', 'continuous'],
-                                             'business_name': [self.cont_business_colum[idx],self.cont_business_colum[idx_1]],
-                                             'analysis_name': 'Bivariate Analysis'})
+                    bivariate_charts.append({"chart_type": "Histogram",
+                                             "chart_data": histogram,
+                                             "column_name": [x_feature, y_feature],
+                                             "data_type": ['continuous', 'continuous'],
+                                             "business_name": [self.cont_business_colum[idx],self.cont_business_colum[idx_1]],
+                                             "analysis_name": "Bivariate Analysis"})
 
 
 

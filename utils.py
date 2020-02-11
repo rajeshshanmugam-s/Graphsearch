@@ -26,15 +26,15 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
         # x_feature_data, y_feature_data = groupby_frame_generator(df,feature)
         out_df = groupby_frame_generator(df,feature)
         df_data = {
-            'Title': feature,
-            'Label': {'x': feature,
-                      'y': 'Count'},
+            "Title": feature,
+            "Label": {"x": feature,
+                      "y": "Count"},
             # 'values': {'x': x_feature_data,
             #            'y': y_feature_data},
-            'chart_type': chart,
-            'values': out_df,
-            'Legends': {0: feature,
-                        1: 'Count'}
+            "chart_type": chart,
+            "values": out_df,
+            "Legends": {0: feature,
+                        1: "Count"}
         }
         logger.debug("Univariate For {}, chart {}".format(feature, chart))
 
@@ -42,30 +42,30 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
         out_df = pd.DataFrame({'count': df.groupby(df[feature]).size()}).reset_index()
         out_df = out_df.set_index(out_df.columns[0]).to_dict()['count']
         df_data = {
-            'Title': feature,
-            'Label': {'x': feature,
-                      'y': 'Count'},
+            "Title": feature,
+            "Label": {"x": feature,
+                      "y": "Count"},
             # 'values': {'x': x_feature_data,
             #            'y': y_feature_data},
-            'chart_type': chart,
-            'values': out_df,
-            'Legends': {0: feature,
-                        1: 'Count'}
+            "chart_type": chart,
+            "values": out_df,
+            "Legends": {0: feature,
+                        1: "Count"}
         }
         logger.debug("Univariate For {}, chart {}".format(feature, chart))
 
     elif feature and chart == 'BoxPlot' or chart == 'Histogram':
         feature_data = groupby_frame_generator(df,feature,chart_name=chart)
         df_data = {
-            'Title': feature,
-            'chart_type': chart,
-            'Label': {
-                'x': feature
+            "Title": feature,
+            "chart_type": chart,
+            "Label": {
+                "x": feature
             },
-            'values': {
-                'Data': feature_data
+            "values": {
+                "Data": feature_data
             },
-            'Legends': {
+            "Legends": {
                 0: feature
             }
         }
@@ -78,12 +78,12 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
             grouped_data = groupby_frame_generator(df=df, x_feature=x_feature, y_feature=y_feature)
             #TODO: Need to change the x and y values based on frontend
             df_data = {
-                'Title': x_feature + ' vs ' + y_feature,
-                'chart_type': chart,
-                'Label': {'x': x_feature,
+                "Title": x_feature + ' vs ' + y_feature,
+                "chart_type": chart,
+                "Label": {"x": x_feature,
                           'y': y_feature},
-                'values': {'data': grouped_data},
-                'Legends': {0: x_feature,
+                "values": {"data": grouped_data},
+                "Legends": {0: x_feature,
                             1: y_feature}
             }
             logger.debug("For {} chart:{} x_feature:{}, y_feature:{}".format(feature, chart, x_feature, y_feature))
@@ -91,13 +91,13 @@ def data_organiser(chart, df, x_feature=None, y_feature=None, feature=None):
             x_feature_data = json_builder(df[x_feature])
             y_feature_data = json_builder(df[y_feature])
             df_data = {
-                'Title': x_feature+' vs '+ y_feature,
-                'chart_type': chart,
-                'Label': {'x': x_feature,
+                "Title": x_feature+' vs '+ y_feature,
+                "chart_type": chart,
+                "Label": {"x": x_feature,
                           'y': y_feature},
-                'values': {'x': x_feature_data,
-                           'y': y_feature_data},
-                'Legends': {0: x_feature,
+                "values": {"x": x_feature_data,
+                           "y": y_feature_data},
+                "Legends": {0: x_feature,
                             1: y_feature}
             }
         logger.debug("For {} chart {} x_feature {}, y_feature {}".format(feature, chart, x_feature, y_feature))

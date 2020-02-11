@@ -101,7 +101,7 @@ def query_matcher():
     question = query['data']
     id = query['id']
     input_data, intents, column_name = intents_generator(question, id)
-    return data_finder(column_name, id)
+    return jsonify(data_finder(column_name, id))
 
 
 
