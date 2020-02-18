@@ -265,35 +265,39 @@ $(document).ready(function() {
 
     // check chart type
     function createChart(data) {
-        if(data.chart_type == "piechart") {
-            pieChart(data)
-        }
-        else if(data.chart_type == "Barchart") {
-            barChart(data)
-        }
-        else if(data.chart_type == "Histogram") {
-            histogram(data)
-        }
-        else if(data.chart_type == "Boxplot") {
-            boxplot(data)
-        }
-        else if(data.chart_type == "linechart") {
-            lineChart(data)
-        } 
-        else {
-            console.log("diff chart")
+        console.log(data)
+        var i;
+        for (i = 0;i < data.length; i++) {
+            if(data[i].chart_type == "piechart") {
+                pieChart(data[i])
+            }
+            else if(data[i].chart_type == "barchart") {
+                barChart(data[i])
+            }
+            else if(data[i].chart_type == "Histogram") {
+                histogram(data[i])
+            }
+            else if(data[i].chart_type == "Boxplot") {
+                boxplot(data[i])
+            }
+            else if(data[i].chart_type == "linechart") {
+                lineChart(data[i])
+            } 
+            else {
+                console.log("diff chart")
+            }
         }
     }
 
     // function to create piechart
     function pieChart(data) {
-        console.log(data)
         var width = 450
         var height = 450
         var margin = 40
         var radius = Math.min(width, height) / 2 - margin
         var svg = d3.select("div.chart-list")
                     .append("div")
+                    .classed("pie-chart", true)
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
@@ -340,7 +344,62 @@ $(document).ready(function() {
 
     // function to create barchart
     function barChart(data) {
-        console.log(data)
+        var margin = {top: 30, right: 30, bottom: 70, left: 60},
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        var svg = d3.select("div.chart-list")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        // x-axis
+        var x = d3.scaleBand()
+                    .range([ 0, width ])
+                    .domain(data.values.map(function(d) {
+                        var getValue = d3.values(d)
+                        var initialValue = getValue[0]
+                        return initialValue;
+                    }))
+                    .padding(0.2);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end");
+            
+        // Add Y axis
+        var y = d3.scaleLinear()
+        .domain([0, 10])
+        .range([ height, 0]);
+        svg.append("g")
+        .call(d3.axisLeft(y));
+
+         // Bars
+        svg.selectAll("mybar")
+         .data(data.values)
+         .enter()
+         .append("rect")
+         .attr("x", function(d) {
+             var getVal = d3.values(d)
+             var initialVal = getVal[0]
+             return x(initialVal);
+        })
+        .attr("y", function(d) { 
+            var getValue = d3.values(d)
+            var initialValue = getValue[1]
+            return y(initialValue);
+        })
+        .attr("width", x.bandwidth())
+        .attr("height", function(d) { 
+            var getValue = d3.values(d)
+            var initialValue = getValue[1]
+            return height - y(initialValue); 
+        })
+        .attr("fill", "#69b3a2")
+
     }
 
     // function to create histogram
