@@ -295,9 +295,9 @@ $(document).ready(function() {
         var height = 450
         var margin = 40
         var radius = Math.min(width, height) / 2 - margin
-        var svg = d3.select("div.chart-list")
+        var svg = d3.select("div.chart-cont")
                     .append("div")
-                    .classed("pie-chart", true)
+                    .classed("chart-list", true)
                     .append("svg")
                     .attr("width", width)
                     .attr("height", height)
@@ -347,7 +347,9 @@ $(document).ready(function() {
         var margin = {top: 30, right: 30, bottom: 70, left: 60},
             width = 460 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
-        var svg = d3.select("div.chart-list")
+        var svg = d3.select("div.chart-cont")
+                    .append("div")
+                    .classed("chart-list", true)
                     .append("svg")
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
